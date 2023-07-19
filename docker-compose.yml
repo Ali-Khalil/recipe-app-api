@@ -1,0 +1,18 @@
+# docker compose syntax version
+version: "3.9"
+
+# service/ container
+services:
+  app:
+    build:
+      context: .      # path, from where the docker compose file should be run
+      args:
+        - DEV=true
+    ports:
+      - "8001:8000"   # local machine port: docker container port
+    volumes:
+      - ./app:/app    # local machine path: container path. objective -> to sync the code from local to container, so we avoid building container each time.
+    command: >        # command that is used to run the service, NOTE: this can be overriden when we run docker-compose run
+      sh -c "python manage.py runserver 0.0.0.0:8000"   
+      
+
